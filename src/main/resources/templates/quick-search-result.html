@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<body>
+<div th:insert="fragments/header"></div>
+<h2>Search Results</h2>
+<table>
+    <thead>
+    <tr>
+        <th>Title</th>
+        <th>Release Year</th>
+        <th>Length</th>
+        <th>Rental Rate</th>
+    </tr>
+    </thead>
+    <tr th:each="films : ${searchResults}">
+        <td><a th:href="@{selectFilm/{id}(id=${films.filmId})}" th:text="${films.title}"></a></td>
+        <td th:text="${films.releaseYear}"></td>
+        <td th:text="${films.length}"></td>
+        <td th:text="${films.rentalRate}"></td>
+
+    </tr>
+</table>
+<!--<div th:insert="fragments/footer :: main"></div>-->
+</body>
+</html>

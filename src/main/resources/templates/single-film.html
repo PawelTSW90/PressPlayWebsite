@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<body>
+<div th:insert="fragments/header"></div>
+<h2>Single film</h2>
+<table>
+    <thead>
+    <tr>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Release Year</th>
+        <th>Length</th>
+        <th>Rental Duration</th>
+        <th>Rating</th>
+        <th>Replacement Cost</th>
+        <th>Special Features</th>
+        <th>Rental Rate</th>
+    </tr>
+    </thead>
+    <tr th:each="films : ${singleFilm}">
+    <td th:text="${films.title}"></td>
+    <td th:text="${films.description}"></td>
+    <td th:text="${films.releaseYear}"></td>
+    <td th:text="${films.length}"></td>
+    <td th:text="${films.rentalDuration}"></td>
+    <td th:text="${films.rating}"></td>
+    <td th:text="${films.replacementCost}"></td>
+    <td th:text="${films.specialFeatures}"></td>
+    <td th:text="${films.rentalRate}"></td>
+</table>
+<!--<div th:insert="fragments/footer :: main"></div>-->
+</body>
+</html>

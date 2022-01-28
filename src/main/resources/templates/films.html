@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>All Customers</title>
+    <!--<link th:href="@{/css/style.css}" rel="stylesheet"/>-->
+</head>
+<body>
+<div th:insert="fragments/header"></div>
+<h2>Movies</h2>
+<table>
+    <thead>
+    <tr>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Release Year</th>
+        <th>Rental Rate</th>
+        <th>Length</th>
+        <th>Rating</th>
+    </tr>
+    </thead>
+    <tr th:each="films : ${film}">
+        <td><a th:href="@{selectFilm/{id}(id=${films.filmId})}" th:text="${films.title}"></a></td>
+        <td th:text="${films.getDescription()}"></td>
+        <td th:text="${films.releaseYear}"></td>
+        <td th:text="${films.rentalRate}"></td>
+        <td th:text="${films.length}"></td>
+        <td th:text="${films.rating}"></td>
+        <!--<td><a th:href="@{/delete/{id}(id=${customer.id})}">Delete</a></td>
+        <td><a th:href="@{/edit/{id}(id=${customer.id})}">Edit</a></td>-->
+    </tr>
+</table>
+</body>
+</html>
