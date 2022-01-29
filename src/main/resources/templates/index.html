@@ -1,23 +1,27 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
 <img src="logo.png" alt="alt" width="100" height="100">
-<!--<div th:insert="fragments/header"></div>-->
+<div th:insert="fragments/header"></div>
 
 <h1>
     <a th:href="@{/films}">FILMS</a><br>
 </h1>
-<h1>
-
+<div sec:authorize="isAnonymous()">
+    <a th:href="@{/login}">Log in</a>
+    <br>
+    <a th:href="@{/register}">Register</a>
+</div>
+<div sec:authorize="isFullyAuthenticated()">
     <a th:href="@{/logout}">LOGOUT</a><br>
-</h1>
-<h1>
-    <a th:href="@{/register}">REGISTER</a><br>
-</h1>
+    <a th:href="@{/userPage}">USER PAGE</a>
+    <br>
+</div>
     <a th:href="@{/about}">ABOUT</a><br><br>
     <form th:action="@{/search-film}" method="post">
         <label>Search: </label>

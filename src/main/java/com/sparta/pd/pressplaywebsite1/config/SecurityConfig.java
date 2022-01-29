@@ -23,25 +23,35 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
 
-
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        /*auth.inMemoryAuthentication().withUser("Pawel").password("{noop}pawel").authorities("STAFF");
-        auth.inMemoryAuthentication().withUser("Kieran").password("{noop}kieran").authorities("USER");*/
-auth.jdbcAuthentication()
-        .dataSource(dataSource);
+
+        auth.jdbcAuthentication()
+                .dataSource(dataSource)
+                .usersByUsernameQuery("select user_name, password, user_enabled from users where user_name=?")
+                /*.usersByUsernameQuery("select username, password, active from staff where username=?")*/
+                .authoritiesByUsernameQuery("select user_name, user_role from users where user_name=?")
+               /* .authoritiesByUsernameQuery("select username, user_role from staff where username=?")*/
+                .passwordEncoder(encoder);
 
 
     }
+
+
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 //only staff has access to about url
                 .antMatchers("/about").hasAnyAuthority("STAFF")
-                //always use homepage after success login
-                .and().formLogin().defaultSuccessUrl("/", true)
+                .antMatchers("/single-film").authenticated()
+                .and()
+                .formLogin()
+                .permitAll()
+                .and()
+                .logout().permitAll()
                 //go to url after failed login
-                .and().exceptionHandling().accessDeniedPage("/access-denied");
+                .and()
+                .exceptionHandling().accessDeniedPage("/access-denied");
     }
 }
