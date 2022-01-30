@@ -1,17 +1,14 @@
 package com.sparta.pd.pressplaywebsite1.controllers;
 
 import com.sparta.pd.pressplaywebsite1.entities.FilmEntity;
-import com.sparta.pd.pressplaywebsite1.repositories.UserRepository;
-import com.sparta.pd.pressplaywebsite1.repositories.FilmRepository;
-import com.sparta.pd.pressplaywebsite1.services.UserService;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+import com.sparta.pd.pressplaywebsite1.repositories.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+
 import java.util.ArrayList;
 
 @Controller
@@ -19,17 +16,27 @@ public class IndexController {
 
     private final FilmRepository filmRepository;
     private final UserRepository userRepository;
+    private final AddressRepository addressRepository;
+    private final CityRepository cityRepository;
+    private final CountryRepository countryRepository;
+    private final RentalRepository rentalRepository;
+    private final InventoryRepository inventoryRepository;
 
-    public IndexController(FilmRepository filmRepository, UserRepository userRepository) {
+    public IndexController(FilmRepository filmRepository, UserRepository userRepository, AddressRepository addressRepository,
+    CityRepository cityRepository, CountryRepository countryRepository, RentalRepository rentalRepository, InventoryRepository inventoryRepository) {
         this.filmRepository = filmRepository;
         this.userRepository = userRepository;
+        this.addressRepository = addressRepository;
+        this.cityRepository = cityRepository;
+        this.countryRepository = countryRepository;
+        this.rentalRepository = rentalRepository;
+        this.inventoryRepository = inventoryRepository;
     }
+
 
 
     @GetMapping("/about")
     public String getAboutPage() {
-        System.out.println(new UserService(userRepository).getUserId());
-        System.out.println(new UserService(userRepository).getUserName());
         return "about";
 
     }
@@ -61,7 +68,7 @@ public class IndexController {
     }
 
     @GetMapping("/access-denied")
-    public String getAccessDeniedPage(){
+    public String getAccessDeniedPage() {
         return "access-denied";
     }
 
@@ -71,7 +78,7 @@ public class IndexController {
     }
 
     @GetMapping("/login")
-    public String loginPage(){
+    public String loginPage() {
         return "login";
     }
 
@@ -81,7 +88,7 @@ public class IndexController {
     }
 
     @GetMapping("/homepage")
-    public String homePage(){
+    public String homePage() {
         return "index";
     }
 
@@ -94,7 +101,9 @@ public class IndexController {
     }
 
     @GetMapping("/userPage")
-    public String getUserPage(@PathVariable("userName") String userName, Model model) {
+    public String getUserPage(Model model) {
+        model.addAttribute("user", new UserController(userRepository, addressRepository, cityRepository, countryRepository));
+        model.addAttribute("rental", new RentalController(userRepository,rentalRepository, inventoryRepository, filmRepository));
         return "userPage";
     }
 }

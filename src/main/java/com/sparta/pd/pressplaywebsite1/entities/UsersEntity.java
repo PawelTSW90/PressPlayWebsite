@@ -11,6 +11,7 @@ public class UsersEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
     private Integer storeId;
+    private Long addressId;
     private String userName;
     private String lastName;
     private String email;
@@ -54,6 +55,16 @@ public class UsersEntity {
 
     public void setStoreId(Integer storeId){
         this.storeId = storeId;
+    }
+
+    @Basic
+    @Column(name = "address_id")
+    public Long getAddressId(){
+        return addressId;
+    }
+
+    public void setAddressId(Long addressId){
+        this.addressId = addressId;
     }
 
 

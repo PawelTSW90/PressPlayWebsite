@@ -1,11 +1,67 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <body>
+<div th:insert="fragments/header"></div>
+<h2>User Details</h2>
+<label>User name: </label>
+<a th:text="${user.getUsersEntity().getUserName()}"></a><br>
+<label>Last name: </label>
+<a th:text="${user.getUsersEntity().getLastName()}"></a><br>
+<label>Email: </label>
+<a th:text="${user.getUsersEntity().getEmail()}"></a><br>
+<label>Address: </label>
+<a th:text="${user.getAddressEntity().getAddress()}"></a><br>
+<label>Address 2: </label>
+<a th:text="${user.getAddressEntity().getAddress2()}"></a><br>
+<label>District: </label>
+<a th:text="${user.getAddressEntity().getDistrict()}"></a><br>
+<label>City: </label>
+<!--<a th:text="${user.getAddressEntity().get}"></a><br>-->
+<label>Country: </label>
+<a th:text="${user.getCountryEntity().getCountry()}"></a><br>
+<label>Postal Code: </label>
+<a th:text="${user.getAddressEntity().getPostalCode()}"></a><br>
+<label>Phone: </label>
+<a th:text="${user.getAddressEntity().getPhone()}"></a><br>
 
+<h2>Rental History</h2>
+<table>
+    <thead>
+    <tr>
+        <th>Title</th>
+        <th>Rental Date</th>
+        <th>Return Date</th>
+    </tr>
+    </thead>
+    <tr th:each="rentals : ${rental.getFilmsHistoryFilmEntities()}">
+        <td th:text="${rentals.title}"></td>
+    <tr th:each="rentals : ${rental.getFilmsHistoryRentalEntities()}">
+        <td th:text="${rentals.rentalDate}"></td>
+        <td th:text="${rentals.returnDate}"></td>
+
+    </tr>
+
+</table>
+
+<h2>Rented Films</h2>
+<table>
+    <thead>
+    <tr>
+        <th>Title</th>
+        <th>Rental Date</th>
+        <th>Return Date</th>
+    </tr>
+    </thead>
+    <tr th:each="rentals : ${rental.getFilmsToReturnFilmEntities()}">
+        <td th:text="${rentals.title}"></td>
+    <tr th:each="rentals : ${rental.getFilmsToReturnRentalEntities()}">
+        <td th:text="${rentals.rentalDate}"></td>
+        <!--<td th:text="${rentals.returnDate}"></td>-->
+
+    </tr>
+
+</table>
+
+<!--<div th:insert="fragments/footer :: main"></div>-->
 </body>
 </html>
