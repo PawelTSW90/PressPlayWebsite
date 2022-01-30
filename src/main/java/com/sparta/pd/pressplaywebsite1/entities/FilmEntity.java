@@ -8,7 +8,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "film", schema = "sakila")
 public class FilmEntity {
-    private Long filmId;
+    private String filmId;
     private String title;
     private String description;
     private Integer releaseYear;
@@ -29,11 +29,11 @@ public class FilmEntity {
 
     @Id
     @Column(name = "film_id")
-    public Long getFilmId() {
+    public String getFilmId() {
         return filmId;
     }
 
-    public void setFilmId(Long filmId) {
+    public void setFilmId(String filmId) {
         this.filmId = filmId;
     }
 

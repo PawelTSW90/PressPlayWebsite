@@ -2,6 +2,7 @@ package com.sparta.pd.pressplaywebsite1.controllers;
 
 import com.sparta.pd.pressplaywebsite1.entities.FilmEntity;
 import com.sparta.pd.pressplaywebsite1.repositories.*;
+import org.apache.catalina.Store;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,9 +22,11 @@ public class IndexController {
     private final CountryRepository countryRepository;
     private final RentalRepository rentalRepository;
     private final InventoryRepository inventoryRepository;
+    private final StoreRepository storeRepository;
 
     public IndexController(FilmRepository filmRepository, UserRepository userRepository, AddressRepository addressRepository,
-    CityRepository cityRepository, CountryRepository countryRepository, RentalRepository rentalRepository, InventoryRepository inventoryRepository) {
+    CityRepository cityRepository, CountryRepository countryRepository, RentalRepository rentalRepository, InventoryRepository inventoryRepository,
+                           StoreRepository storeRepository) {
         this.filmRepository = filmRepository;
         this.userRepository = userRepository;
         this.addressRepository = addressRepository;
@@ -31,6 +34,7 @@ public class IndexController {
         this.countryRepository = countryRepository;
         this.rentalRepository = rentalRepository;
         this.inventoryRepository = inventoryRepository;
+        this.storeRepository = storeRepository;
     }
 
 
@@ -97,13 +101,14 @@ public class IndexController {
         FilmEntity filmsEntity = filmRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid Customer ID: " + id));
         model.addAttribute("singleFilm", filmsEntity);
+        model.addAttribute("availability", new FIlmAvailabilityController(inventoryRepository).checkFilmAvailability(id));
         return "single-film";
     }
 
     @GetMapping("/userPage")
     public String getUserPage(Model model) {
         model.addAttribute("user", new UserController(userRepository, addressRepository, cityRepository, countryRepository));
-        model.addAttribute("rental", new RentalController(userRepository,rentalRepository, inventoryRepository, filmRepository));
+        model.addAttribute("rental", new RentalController(userRepository,rentalRepository, inventoryRepository, filmRepository, storeRepository));
         return "userPage";
     }
 }

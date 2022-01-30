@@ -1,5 +1,7 @@
 package com.sparta.pd.pressplaywebsite1.entities;
 
+import org.apache.catalina.Store;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Objects;
@@ -8,8 +10,10 @@ import java.util.Objects;
 @Table(name = "inventory", schema = "sakila")
 public class InventoryEntity {
     private Long inventoryId;
+    private Long storeId;
     private Timestamp lastUpdate;
     private Long filmId;
+    private Integer available;
 
     @OneToOne
     @JoinColumn(name = "film_id")
@@ -23,6 +27,18 @@ public class InventoryEntity {
         this.filmId = filmId;
     }
 
+    @OneToOne
+    @JoinColumn(name = "store_id")
+    private StoreEntity storeEntity;
+
+    public Long getStoreId(){
+        return storeId;
+    }
+
+    public void setStoreId(Long storeId){
+        this.storeId = storeId;
+    }
+
     @Id
     @Column(name = "inventory_id")
     public Long getInventoryId() {
@@ -31,6 +47,16 @@ public class InventoryEntity {
 
     public void setInventoryId(Long inventoryId) {
         this.inventoryId = inventoryId;
+    }
+
+    @Basic
+    @Column(name = "available")
+    public Integer getAvailable(){
+        return available;
+    }
+
+    public void setAvailable(Integer available){
+        this.available = available;
     }
 
     @Basic

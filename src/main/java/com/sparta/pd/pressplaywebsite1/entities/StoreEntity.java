@@ -8,6 +8,7 @@ import java.util.Objects;
 @Table(name = "store", schema = "sakila")
 public class StoreEntity {
     private Long storeId;
+    private String storeLocation;
     private Timestamp lastUpdate;
 
     @Id
@@ -18,6 +19,16 @@ public class StoreEntity {
 
     public void setStoreId(Long storeId) {
         this.storeId = storeId;
+    }
+
+    @Basic
+    @Column(name = "store_location")
+
+    public String getStoreLocation(){
+        return storeLocation;
+    }
+    public void setStoreLocation(String storeLocation){
+        this.storeLocation = storeLocation;
     }
 
     @Basic

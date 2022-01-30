@@ -2,32 +2,43 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <body>
 <div th:insert="fragments/header"></div>
-<h2>Single film</h2>
 <table>
-    <thead>
-    <tr>
-        <th>Title</th>
-        <th>Description</th>
-        <th>Release Year</th>
-        <th>Length</th>
-        <th>Rental Duration</th>
-        <th>Rating</th>
-        <th>Replacement Cost</th>
-        <th>Special Features</th>
-        <th>Rental Rate</th>
-    </tr>
-    </thead>
     <tr th:each="films : ${singleFilm}">
-    <td th:text="${films.title}"></td>
-    <td th:text="${films.description}"></td>
-    <td th:text="${films.releaseYear}"></td>
-    <td th:text="${films.length}"></td>
-    <td th:text="${films.rentalDuration}"></td>
-    <td th:text="${films.rating}"></td>
-    <td th:text="${films.replacementCost}"></td>
-    <td th:text="${films.specialFeatures}"></td>
-    <td th:text="${films.rentalRate}"></td>
+        <td th:text="${films.title}"></td>
+        <td th:text="${films.description}"></td>
+        <td th:text="${films.releaseYear}"></td>
+        <td th:text="${films.length}"></td>
+        <td th:text="${films.rentalDuration}"></td>
+        <td th:text="${films.rating}"></td>
+        <td th:text="${films.replacementCost}"></td>
+        <td th:text="${films.specialFeatures}"></td>
+        <td th:text="${films.rentalRate}"></td>
 </table>
 <!--<div th:insert="fragments/footer :: main"></div>-->
 </body>
 </html>
+<div th:each="films: ${singleFilm}">
+    <h2><label>Title: </label>
+        <a th:text="${films.title}"></a><br>
+    </h2>
+    <label>Description: </label>
+    <a th:text="${films.description}"></a><br>
+    <label>Release year: </label>
+    <a th:text="${films.releaseYear}"></a><br>
+    <label>Length: </label>
+    <a th:text="${films.length}"></a><br>
+    <label>Rental Duration: </label>
+    <a th:text="${films.rentalDuration}"></a><br>
+    <label>Rating: </label>
+    <a th:text="${films.rating}"></a><br>
+    <label>Replacement Cost: </label>
+    <a th:text="${films.replacementCost}"></a><br>
+    <label>Special Features: </label>
+    <a th:text="${films.specialFeatures}"></a><br>
+    <label>Rental Rate: </label>
+    <a th:text="${films.rentalRate}"></a><br>
+    <label>Availability: </label>
+    <a th:each="availability: ${availability}"></a><br>
+    <a th:text="${availability.toString().replace('[', '').replace(']', '')}"></a><br>
+    </a>
+</div>

@@ -1,13 +1,7 @@
 package com.sparta.pd.pressplaywebsite1.controllers;
 
-import com.sparta.pd.pressplaywebsite1.entities.FilmEntity;
-import com.sparta.pd.pressplaywebsite1.entities.InventoryEntity;
-import com.sparta.pd.pressplaywebsite1.entities.RentalEntity;
-import com.sparta.pd.pressplaywebsite1.entities.UsersEntity;
-import com.sparta.pd.pressplaywebsite1.repositories.FilmRepository;
-import com.sparta.pd.pressplaywebsite1.repositories.InventoryRepository;
-import com.sparta.pd.pressplaywebsite1.repositories.RentalRepository;
-import com.sparta.pd.pressplaywebsite1.repositories.UserRepository;
+import com.sparta.pd.pressplaywebsite1.entities.*;
+import com.sparta.pd.pressplaywebsite1.repositories.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
@@ -19,20 +13,24 @@ public class RentalController {
     private final RentalRepository rentalRepository;
     private final InventoryRepository inventoryRepository;
     private final FilmRepository filmRepository;
+    private final StoreRepository storeRepository;
     private ArrayList<RentalEntity> filmsHistoryRentalEntities = new ArrayList<>();
     private ArrayList<RentalEntity> filmsToReturnRentalEntities = new ArrayList<>();
     private ArrayList<InventoryEntity> filmsHistoryInventoryEntities = new ArrayList<>();
     private ArrayList<InventoryEntity> filmsToReturnInventoryEntities = new ArrayList<>();
     private ArrayList<FilmEntity> filmsHistoryFilmEntities = new ArrayList<>();
     private ArrayList<FilmEntity> filmsToReturnFilmEntities = new ArrayList<>();
+    private ArrayList<StoreEntity> filmsHistoryStoreEntities = new ArrayList<>();
+    private ArrayList<StoreEntity> filmsToReturnStoreEntities = new ArrayList<>();
     private Long userId;
 
     public RentalController(UserRepository userRepository, RentalRepository rentalRepository, InventoryRepository inventoryRepository,
-                            FilmRepository filmRepository) {
+                            FilmRepository filmRepository, StoreRepository storeRepository) {
         this.userRepository = userRepository;
         this.rentalRepository = rentalRepository;
         this.inventoryRepository = inventoryRepository;
         this.filmRepository = filmRepository;
+        this.storeRepository = storeRepository;
         auth = SecurityContextHolder.getContext().getAuthentication();
         setUserId();
         setUserRentalEntities(userId);
@@ -40,6 +38,8 @@ public class RentalController {
         setUserInventoryEntities(filmsToReturnRentalEntities, true);
         setFilmEntities(filmsHistoryInventoryEntities, false);
         setFilmEntities(filmsToReturnInventoryEntities, true);
+        setStoreEntities(filmsHistoryInventoryEntities, false);
+        setStoreEntities(filmsToReturnInventoryEntities, true);
     }
 
     public void setUserId() {
@@ -89,6 +89,21 @@ public class RentalController {
         }
     }
 
+    public void setStoreEntities(ArrayList<InventoryEntity> inventoryEntities, boolean filmToReturn){
+        for(StoreEntity storeEntity : storeRepository.findAll()){
+            for(InventoryEntity inventoryEntity: inventoryEntities){
+                if(storeEntity.getStoreId().equals(inventoryEntity.getStoreId())){
+                    if(filmToReturn){
+                        filmsToReturnStoreEntities.add(storeEntity);
+                    } else{
+                        filmsHistoryStoreEntities.add(storeEntity);
+                    }
+
+                }
+            }
+        }
+    }
+
     public void setFilmEntities(ArrayList<InventoryEntity> inventoryEntities, boolean filmToReturn) {
         for (FilmEntity filmEntity : filmRepository.findAll()) {
             for (InventoryEntity inventoryEntity : inventoryEntities) {
@@ -122,5 +137,13 @@ public class RentalController {
 
     public ArrayList<FilmEntity> getFilmsToReturnFilmEntities() {
         return filmsToReturnFilmEntities;
+    }
+
+    public ArrayList<StoreEntity> getFilmsHistoryStoreEntities() {
+        return filmsHistoryStoreEntities;
+    }
+
+    public ArrayList<StoreEntity> getFilmsToReturnStoreEntities() {
+        return filmsToReturnStoreEntities;
     }
 }
