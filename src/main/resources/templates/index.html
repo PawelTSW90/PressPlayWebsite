@@ -8,6 +8,7 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <body>
 <div th:insert="fragments/header"></div>
 <h1>
+
     <a th:href="@{/films}">FILMS</a><br>
 </h1>
 <div sec:authorize="isAnonymous()">
@@ -15,9 +16,14 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
     <br>
     <a th:href="@{/register}">Register</a>
 </div>
+<p th:each="authority : ${#authentication.getAuthorities()}"
+   th:if="${authority.getAuthority().startsWith('STAFF')}">
+<a th:href="@{/staffPage}">STAFF PAGE</a>
+</p>
 <div sec:authorize="isFullyAuthenticated()">
     <a th:href="@{/logout}">LOGOUT</a><br>
     <a th:href="@{/userPage}">USER PAGE</a>
+
     <br>
 </div>
     <a th:href="@{/about}">ABOUT</a><br><br>

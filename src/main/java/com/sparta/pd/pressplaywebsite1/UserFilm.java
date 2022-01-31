@@ -52,6 +52,7 @@ public class UserFilm {
     }
     public void setFilmAsRented(){
         inventoryEntity.setAvailable(0);
+        inventoryRepository.save(inventoryEntity);
     }
 
     public InventoryEntity getInventoryEntity() {

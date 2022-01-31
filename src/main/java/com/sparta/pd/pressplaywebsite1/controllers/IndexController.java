@@ -108,10 +108,7 @@ public class IndexController {
         rentalEntity1.setStaffId(userBasket.getFilmsInBasket().get(0).getStaffId());
         rentalEntity1.setLastUpdate(new Timestamp(new Date().getTime()));
         rentalRepository.save(rentalEntity1);
-        System.out.println(userBasket.getFilmsInBasket().get(0).getInventoryId());
-        System.out.println(userBasket.getFilmsInBasket().get(0).getInventoryEntity().getAvailable());
         userBasket.getFilmsInBasket().get(0).setFilmAsRented();
-        System.out.println(userBasket.getFilmsInBasket().get(0).getInventoryEntity().getAvailable());
         userBasket.clearBasket();
         return "filmRentSuccess";
     }
