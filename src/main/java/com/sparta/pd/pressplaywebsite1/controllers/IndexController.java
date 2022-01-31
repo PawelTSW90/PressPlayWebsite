@@ -1,9 +1,6 @@
 package com.sparta.pd.pressplaywebsite1.controllers;
 
-import com.sparta.pd.pressplaywebsite1.FIlmAvailability;
-import com.sparta.pd.pressplaywebsite1.User;
-import com.sparta.pd.pressplaywebsite1.UserBasket;
-import com.sparta.pd.pressplaywebsite1.UserDetails;
+import com.sparta.pd.pressplaywebsite1.*;
 import com.sparta.pd.pressplaywebsite1.entities.FilmEntity;
 import com.sparta.pd.pressplaywebsite1.entities.RentalEntity;
 import com.sparta.pd.pressplaywebsite1.repositories.*;
@@ -31,7 +28,6 @@ public class IndexController {
     private final StoreRepository storeRepository;
     public static UserBasket userBasket;
     private static UserDetails userDetails;
-    private static FIlmAvailability fIlmAvailability;
 
     public IndexController(FilmRepository filmRepository, UserRepository userRepository, AddressRepository addressRepository,
     CityRepository cityRepository, CountryRepository countryRepository, RentalRepository rentalRepository, InventoryRepository inventoryRepository,
@@ -44,7 +40,7 @@ public class IndexController {
         this.rentalRepository = rentalRepository;
         this.inventoryRepository = inventoryRepository;
         this.storeRepository = storeRepository;
-        userBasket = new UserBasket(filmRepository, inventoryRepository);
+        userBasket = new UserBasket();
     }
 
 
@@ -92,9 +88,9 @@ public class IndexController {
 
     @GetMapping("checkout/{id}/{store}")
     public String checkoutPage(@PathVariable("id") Long id, @PathVariable("store") String store, Model model){
+        UserFilm film = new UserFilm(id, store, filmRepository, inventoryRepository);
+        userBasket.addFilmToBasket(film);
         RentalEntity rentalEntity = new RentalEntity();
-        model.addAttribute("rental", rentalEntity);
-        userBasket.addFilmToBasket(id, store);
         model.addAttribute("userBasket", userBasket);
         model.addAttribute("rental", rentalEntity);
         return "checkout";
@@ -107,11 +103,15 @@ public class IndexController {
                 storeRepository);
         RentalEntity rentalEntity1 = new RentalEntity();
         rentalEntity1.setRentalDate(new Timestamp(new Date().getTime()));
-        rentalEntity1.setInventoryId(userBasket.getInventoryId(userBasket.getFilmsInBasket().get(0), userBasket.getFilmsStores().get(0)));
+        rentalEntity1.setInventoryId(userBasket.getFilmsInBasket().get(0).getInventoryId());
         rentalEntity1.setCustomerId(userDetails.getUserId());
-        rentalEntity1.setStaffId(1L);
+        rentalEntity1.setStaffId(userBasket.getFilmsInBasket().get(0).getStaffId());
         rentalEntity1.setLastUpdate(new Timestamp(new Date().getTime()));
         rentalRepository.save(rentalEntity1);
+        System.out.println(userBasket.getFilmsInBasket().get(0).getInventoryId());
+        System.out.println(userBasket.getFilmsInBasket().get(0).getInventoryEntity().getAvailable());
+        userBasket.getFilmsInBasket().get(0).setFilmAsRented();
+        System.out.println(userBasket.getFilmsInBasket().get(0).getInventoryEntity().getAvailable());
         userBasket.clearBasket();
         return "filmRentSuccess";
     }

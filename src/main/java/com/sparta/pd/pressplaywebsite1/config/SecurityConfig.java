@@ -51,8 +51,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 //only staff has access to about url
-                .antMatchers("/about").hasAnyAuthority("STAFF")
-                .antMatchers("/single-film").authenticated()
+                .antMatchers("/single-film").hasAnyAuthority("USER")
                 .antMatchers("/css/**").permitAll()
                 .antMatchers("/images/**").permitAll()
                 .and()

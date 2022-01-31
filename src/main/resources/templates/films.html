@@ -14,7 +14,6 @@
         <th>Title</th>
         <th>Description</th>
         <th>Release Year</th>
-        <th>Rental Rate</th>
         <th>Length</th>
         <th>Rating</th>
     </tr>
@@ -23,7 +22,6 @@
         <td><a th:href="@{selectFilm/{id}(id=${films.filmId})}" th:text="${films.title}"></a></td>
         <td th:text="${films.getDescription()}"></td>
         <td th:text="${films.releaseYear}"></td>
-        <td th:text="${films.rentalRate}"></td>
         <td th:text="${films.length}"></td>
         <td th:text="${films.rating}"></td>
         <!--<td><a th:href="@{/delete/{id}(id=${customer.id})}">Delete</a></td>

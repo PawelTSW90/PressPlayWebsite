@@ -17,20 +17,12 @@
 
         </tr>
         </thead>
-        <tr th:each="film : ${userBasket.getFilmsInBasket()}">
-            <td th:text="${film.title}"></td>
-            <td th:text="${film.rentalDuration} + 'days'"></td>
-            <td th:text="${film.rentalRate}"></td>
+        <tr th:each="basket : ${userBasket.getFilmsInBasket()}">
+            <td th:text="${basket.getFilmTitle()}"></td>
+            <td th:text="${basket.getRentalDuration()}"></td>
+            <td th:text="${basket.getPrice()}"></td>
+            <td th:text="${basket.getStore()}"></td>
         <td>
-        <tr th:each="store : ${userBasket.getFilmsStores()}">
-            <td th:text="${store.toString()}"></td>
-        </tr>
-
-
-
-
-
-
 
     </table>
 <form th:action="@{/rentFilms}" th:object="${rental}" method="post">
