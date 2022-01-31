@@ -10,11 +10,13 @@ public class RentalEntity {
     private Long rentalId;
     private Long customerId;
     private Long inventoryId;
+    private Long staffId;
     private Timestamp rentalDate;
     private Timestamp returnDate;
     private Timestamp lastUpdate;
 
     @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "rental_id")
     public Long getRentalId() {
         return rentalId;
@@ -35,6 +37,18 @@ public class RentalEntity {
 
     public void setCustomerId(Long customerId){
         this.customerId = customerId;
+    }
+
+    @OneToOne
+    @JoinColumn(name = "staff_id")
+    private StaffEntity staffEntity;
+
+    public Long getStaffId(){
+        return staffId;
+    }
+
+    public void setStaffId(Long staffId){
+        this.staffId = staffId;
     }
 
     @OneToOne

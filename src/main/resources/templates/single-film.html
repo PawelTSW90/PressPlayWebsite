@@ -16,7 +16,6 @@
 </table>
 <!--<div th:insert="fragments/footer :: main"></div>-->
 </body>
-</html>
 <div th:each="films: ${singleFilm}">
     <h2><label>Title: </label>
         <a th:text="${films.title}"></a><br>
@@ -38,7 +37,10 @@
     <label>Rental Rate: </label>
     <a th:text="${films.rentalRate}"></a><br>
     <label>Availability: </label>
-    <a th:each="availability: ${availability}"></a><br>
-    <a th:text="${availability.toString().replace('[', '').replace(']', '')}"></a><br>
+    <a th:each="availability: ${availability}">
+    <a th:href="@{/checkout/{id}/{store}(id=${films.filmId}, store=${availability.toString()})}"
+       th:text="${availability.toString().replace('[', '').replace(']', '')}">
     </a>
+    </a><br>
 </div>
+</html>

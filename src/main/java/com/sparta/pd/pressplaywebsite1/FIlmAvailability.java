@@ -1,21 +1,21 @@
-package com.sparta.pd.pressplaywebsite1.controllers;
+package com.sparta.pd.pressplaywebsite1;
 
 import com.sparta.pd.pressplaywebsite1.entities.InventoryEntity;
 import com.sparta.pd.pressplaywebsite1.repositories.InventoryRepository;
 
 import java.util.ArrayList;
 
-public class FIlmAvailabilityController {
+public class FIlmAvailability {
     private final InventoryRepository inventoryRepository;
 
-    public FIlmAvailabilityController(InventoryRepository inventoryRepository) {
+    public FIlmAvailability(InventoryRepository inventoryRepository) {
         this.inventoryRepository = inventoryRepository;
     }
 
-    public ArrayList<String> checkFilmAvailability(String filmId) {
+    public ArrayList<String> checkFilmAvailability(Long filmId) {
         ArrayList<String> availableStores = new ArrayList<>();
         for (InventoryEntity inventoryEntity : inventoryRepository.findAll()) {
-            if (String.valueOf(inventoryEntity.getFilmId()).equals(filmId)) {
+            if (inventoryEntity.getFilmId().equals(filmId)) {
                 if (inventoryEntity.getAvailable() == 1) {
                     if (inventoryEntity.getStoreId() == 1) {
                         if(!availableStores.contains("Skegness")) {

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:insert="fragments/header"></div>
+<h1>Your Films:</h1>
+    <table>
+        <thead>
+        <tr>
+            <th>Title</th>
+            <th>Rental Duration</th>
+            <th>Price</th>
+            <th>Store</th>
+
+        </tr>
+        </thead>
+        <tr th:each="film : ${userBasket.getFilmsInBasket()}">
+            <td th:text="${film.title}"></td>
+            <td th:text="${film.rentalDuration} + 'days'"></td>
+            <td th:text="${film.rentalRate}"></td>
+        <td>
+        <tr th:each="store : ${userBasket.getFilmsStores()}">
+            <td th:text="${store.toString()}"></td>
+        </tr>
+
+
+
+
+
+
+
+    </table>
+<form th:action="@{/rentFilms}" th:object="${rental}" method="post">
+    <button type="submit">Rent</button>
+</form>
+</body>
+</html>

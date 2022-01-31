@@ -1,4 +1,4 @@
-package com.sparta.pd.pressplaywebsite1.controllers;
+package com.sparta.pd.pressplaywebsite1;
 
 import com.sparta.pd.pressplaywebsite1.entities.*;
 import com.sparta.pd.pressplaywebsite1.repositories.*;
@@ -7,7 +7,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.ArrayList;
 
-public class RentalController {
+public class UserDetails {
     private final Authentication auth;
     private final UserRepository userRepository;
     private final RentalRepository rentalRepository;
@@ -24,8 +24,8 @@ public class RentalController {
     private ArrayList<StoreEntity> filmsToReturnStoreEntities = new ArrayList<>();
     private Long userId;
 
-    public RentalController(UserRepository userRepository, RentalRepository rentalRepository, InventoryRepository inventoryRepository,
-                            FilmRepository filmRepository, StoreRepository storeRepository) {
+    public UserDetails(UserRepository userRepository, RentalRepository rentalRepository, InventoryRepository inventoryRepository,
+                       FilmRepository filmRepository, StoreRepository storeRepository) {
         this.userRepository = userRepository;
         this.rentalRepository = rentalRepository;
         this.inventoryRepository = inventoryRepository;
@@ -145,5 +145,9 @@ public class RentalController {
 
     public ArrayList<StoreEntity> getFilmsToReturnStoreEntities() {
         return filmsToReturnStoreEntities;
+    }
+
+    public Long getUserId() {
+        return userId;
     }
 }

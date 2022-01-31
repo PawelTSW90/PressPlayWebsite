@@ -1,4 +1,4 @@
-package com.sparta.pd.pressplaywebsite1.controllers;
+package com.sparta.pd.pressplaywebsite1;
 
 import com.sparta.pd.pressplaywebsite1.entities.AddressEntity;
 import com.sparta.pd.pressplaywebsite1.entities.CityEntity;
@@ -12,7 +12,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 
-public class UserController {
+public class User {
     private final Authentication auth;
     private final UserRepository userRepository;
     private final AddressRepository addressRepository;
@@ -25,8 +25,8 @@ public class UserController {
 
 
 
-    public UserController(UserRepository userRepository, AddressRepository addressRepository, CityRepository cityRepository,
-                          CountryRepository countryRepository) {
+    public User(UserRepository userRepository, AddressRepository addressRepository, CityRepository cityRepository,
+                CountryRepository countryRepository) {
         auth = SecurityContextHolder.getContext().getAuthentication();
         this.userRepository = userRepository;
         this.addressRepository = addressRepository;
